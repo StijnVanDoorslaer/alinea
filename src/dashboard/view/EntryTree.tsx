@@ -9,10 +9,10 @@ import {EntryPhase} from 'alinea/core/EntryRow'
 import {Type} from 'alinea/core/Type'
 import {Icon, fromModule, px} from 'alinea/ui'
 import {IcOutlineDescription} from 'alinea/ui/icons/IcOutlineDescription'
+import {IcRoundArchive} from 'alinea/ui/icons/IcRoundArchive'
 import {IcRoundKeyboardArrowDown} from 'alinea/ui/icons/IcRoundKeyboardArrowDown'
 import {IcRoundKeyboardArrowRight} from 'alinea/ui/icons/IcRoundKeyboardArrowRight'
 import {IcRoundTranslate} from 'alinea/ui/icons/IcRoundTranslate'
-import {IcRoundVisibilityOff} from 'alinea/ui/icons/IcRoundVisibilityOff'
 import {useAtomValue} from 'jotai'
 import {useEffect, useRef} from 'react'
 import {changedEntriesAtom} from '../atoms/DbAtoms.js'
@@ -51,10 +51,10 @@ function EntryTreeItem({item, data}: EntryTreeItemProps) {
   currentData.current = itemData
   const selected = selectedEntry(locale, itemData)
   const {icon} = Type.meta(schema[selected.type])
-  const isDraft = selected.phase === EntryPhase.Draft
   const isUntranslated = locale && selected.locale !== locale
-  const isArchived = selected.phase === EntryPhase.Archived
+  const isDraft = selected.phase === EntryPhase.Draft
   const isUnpublished = selected.phase === EntryPhase.Archived
+  const isArchived = selected.phase === EntryPhase.Archived
   const isSelected = entryId && itemData.id === entryId
 
   return (
@@ -80,11 +80,7 @@ function EntryTreeItem({item, data}: EntryTreeItemProps) {
         <span className={styles.tree.item.icon()}>
           <Icon
             icon={
-              isUntranslated
-                ? IcRoundTranslate
-                : isUnpublished
-                ? IcRoundVisibilityOff
-                : icon ?? IcOutlineDescription
+              isUntranslated ? IcRoundTranslate : icon ?? IcOutlineDescription
             }
           />
         </span>
@@ -105,11 +101,17 @@ function EntryTreeItem({item, data}: EntryTreeItemProps) {
           </span>
         )} */}
 
-        {/* {!isUntranslated && isArchived && (
-          <span className={styles.tree.status({archived: true})}>
-            <Icon icon={IcRoundArchive} size={16} />
+        {/* {!isUntranslated && isUnpublished && (
+          <span className={styles.tree.status()}>
+            <Icon icon={IcRoundVisibilityOff} size={16} />
           </span>
         )} */}
+
+        {!isUntranslated && isArchived && (
+          <span className={styles.tree.status()}>
+            <Icon icon={IcRoundArchive} size={16} />
+          </span>
+        )}
 
         {item.isFolder() && (
           <span className={styles.tree.item.arrow()}>
