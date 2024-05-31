@@ -78,7 +78,7 @@ function ImageView({type, editor}: EntryEditProps & {type: typeof MediaFile}) {
           </div>
         </div>
       </div>
-      <div style={{minWidth: 0}}>
+      <div className={styles.image.col()}>
         <InputField field={type.title} />
         <Property label="Extension">{image.data.extension}</Property>
         <Property label="File size">{prettyBytes(image.data.size)}</Property>
@@ -86,7 +86,7 @@ function ImageView({type, editor}: EntryEditProps & {type: typeof MediaFile}) {
           {image.data.width} x {image.data.height} pixels
         </Property>
         <Property label="URL">
-          <Typo.Monospace>
+          <Typo.Monospace className={styles.image.col.location()}>
             {Media.ORIGINAL_LOCATION in image.data
               ? (image.data[Media.ORIGINAL_LOCATION] as string)
               : image.data.location}
