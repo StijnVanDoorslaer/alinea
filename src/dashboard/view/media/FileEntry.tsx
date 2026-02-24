@@ -5,7 +5,8 @@ import {isImage} from 'alinea/core/media/IsImage'
 import {MEDIA_LOCATION} from 'alinea/core/media/MediaLocation'
 import type {MediaFile} from 'alinea/core/media/MediaTypes'
 import {outcome} from 'alinea/core/Outcome'
-import {Typo} from 'alinea/ui'
+import {HStack, Icon, Typo} from 'alinea/ui'
+import {IcRoundOpenInNew} from 'alinea/ui/icons/IcRoundOpenInNew'
 import {Lift} from 'alinea/ui/Lift'
 import {Main} from 'alinea/ui/Main'
 import {Property} from 'alinea/ui/Property'
@@ -30,6 +31,41 @@ interface Pos {
   y?: number
 }
 
+const referencesImages = [
+  {
+    title: 'Page detail 1',
+    status: 'published',
+    field: 'page.hero.image'
+  },
+  {
+    title: 'Page detail 2',
+    status: 'unpublished',
+    field: 'page.blocks.imagetext.image'
+  },
+  {
+    title: 'Page detail 3',
+    status: 'unpublished',
+    field: 'page.blocks.gallery.image'
+  },
+  {
+    title: 'Page detail 4',
+    status: 'archived',
+    field: 'page.hero.video.image'
+  }
+]
+const referencesFiles = [
+  {
+    title: 'Page detail 1',
+    status: 'published',
+    field: 'page.hero.cta.file'
+  },
+  {
+    title: 'Page detail 2',
+    status: 'unpublished',
+    field: 'page.blocks.documents.links'
+  }
+]
+
 function ImageView({type, editor}: EntryEditProps & {type: typeof MediaFile}) {
   const config = useConfig()
   const image: Entry<MediaFile> = editor.activeVersion as any
@@ -43,75 +79,108 @@ function ImageView({type, editor}: EntryEditProps & {type: typeof MediaFile}) {
     () => new URL(location, Config.baseUrl(config) ?? window.location.href)
   )
   return (
-    <Lift className={styles.image()}>
-      <div
-        className={styles.image.wrapper()}
-        style={{
-          backgroundImage:
-            image.data.averageColor &&
-            `linear-gradient(45deg, ${transparentize(
-              image.data.averageColor,
-              0.6
-            )} 0%, ${transparentize(image.data.averageColor, 0.8)} 100%)`
-        }}
-      >
+    <>
+      <Lift className={styles.image()}>
         <div
-          className={styles.image.preview()}
-          onMouseMove={event => {
-            const rect = event.currentTarget.getBoundingClientRect()
-            const x = (event.clientX - rect.left) / rect.width
-            const y = (event.clientY - rect.top) / rect.height
-            setHover({x, y})
-          }}
-          onMouseOut={() => setHover({})}
-          onBlur={() => setHover({})}
-          onClick={event => {
-            event.preventDefault()
-            const rect = event.currentTarget.getBoundingClientRect()
-            const x = (event.clientX - rect.left) / rect.width
-            const y = (event.clientY - rect.top) / rect.height
-            setFocus({x, y})
+          className={styles.image.wrapper()}
+          style={{
+            backgroundImage:
+              image.data.averageColor &&
+              `linear-gradient(45deg, ${transparentize(
+                image.data.averageColor,
+                0.6
+              )} 0%, ${transparentize(image.data.averageColor, 0.8)} 100%)`
           }}
         >
-          <img
-            className={styles.image.preview.img()}
-            src={image.data.preview}
-            alt="Preview of media file"
-          />
-          <span
-            className={styles.image.preview.focus()}
-            style={{
-              left: `${focus.x * 100}%`,
-              top: `${focus.y * 100}%`
+          <div
+            className={styles.image.preview()}
+            onMouseMove={event => {
+              const rect = event.currentTarget.getBoundingClientRect()
+              const x = (event.clientX - rect.left) / rect.width
+              const y = (event.clientY - rect.top) / rect.height
+              setHover({x, y})
             }}
-          />
-        </div>
-      </div>
-      <div className={styles.image.content()}>
-        <InputField field={type.title} />
-        <Property label="Extension">{image.data.extension}</Property>
-        <Property label="File size">{prettyBytes(image.data.size)}</Property>
-        <Property label="Dimensions">
-          {image.data.width} x {image.data.height} pixels
-        </Property>
-        <Property label="URL">
-          <a
-            href={liveUrl ? String(liveUrl) : location}
-            target="_blank"
-            title={location}
-            className={styles.image.content.url()}
+            onMouseOut={() => setHover({})}
+            onBlur={() => setHover({})}
+            onClick={event => {
+              event.preventDefault()
+              const rect = event.currentTarget.getBoundingClientRect()
+              const x = (event.clientX - rect.left) / rect.width
+              const y = (event.clientY - rect.top) / rect.height
+              setFocus({x, y})
+            }}
           >
-            <Typo.Monospace>{location}</Typo.Monospace>
-          </a>
-        </Property>
-        <Property
-          label="Focus point"
-          help="Click on the image to change the focus point"
-        >
-          ({focusX.toFixed(2)}, {focusY.toFixed(2)})
-        </Property>
-      </div>
-    </Lift>
+            <img
+              className={styles.image.preview.img()}
+              src={image.data.preview}
+              alt="Preview of media file"
+            />
+            <span
+              className={styles.image.preview.focus()}
+              style={{
+                left: `${focus.x * 100}%`,
+                top: `${focus.y * 100}%`
+              }}
+            />
+          </div>
+        </div>
+        <div className={styles.image.content()}>
+          <div className={styles.image.content.readonly()}>
+            <Property label="Extension">{image.data.extension}</Property>
+            <Property label="File size">
+              {prettyBytes(image.data.size)}
+            </Property>
+            <Property label="Dimensions">
+              {image.data.width} x {image.data.height} pixels
+            </Property>
+          </div>
+          <Property
+            label="Focus point"
+            help="Click on the image to change the focus point"
+          >
+            ({focusX.toFixed(2)}, {focusY.toFixed(2)})
+          </Property>
+          <Property label="URL">
+            <a
+              href={liveUrl ? String(liveUrl) : location}
+              target="_blank"
+              title={location}
+              className={styles.image.content.url()}
+            >
+              <Typo.Monospace>{location}</Typo.Monospace>
+            </a>
+          </Property>
+          <InputField field={type.title} />
+          <InputField field={type.alt} />
+        </div>
+      </Lift>
+      <Lift className={styles.references()}>
+        <h2>4 references</h2>
+        <div className={styles.references.list()}>
+          <div className={styles.references.list.item('header')}>
+            <p>Status</p>
+            <p>Title</p>
+            <p>Field</p>
+          </div>
+          {referencesImages.map((detail, index) => (
+            <div key={index} className={styles.references.list.item()}>
+              <p className={styles.references.list.item.status(detail.status)}>
+                {detail.status}
+              </p>
+              <p className={styles.references.list.item.link()}>
+                <HStack gap={8} align="center">
+                  {detail.title}
+                  <Icon icon={IcRoundOpenInNew} />
+                </HStack>
+              </p>
+              <p className={styles.references.list.item.link()}>
+                {detail.field}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Lift>
+    </>
   )
 }
 
@@ -140,21 +209,76 @@ export function IcTwotonePinDrop() {
 }
 
 function FileView({type, editor}: EntryEditProps & {type: typeof MediaFile}) {
+  const config = useConfig()
   const file: Entry<MediaFile> = editor.activeVersion as any
+  const location = file.data.location
+  const [liveUrl] = outcome(
+    () => new URL(location, Config.baseUrl(config) ?? window.location.href)
+  )
   return (
-    <Lift>
-      <InputField field={type.title} />
-      <Property label="Extension">{file.data.extension}</Property>
-      <Property label="File size">{prettyBytes(file.data.size)}</Property>
+    <>
+      <Lift className={styles.image()}>
+        <div className={styles.image.wrapper()}>
+          <div className={styles.image.preview()}>
+            <iframe
+              src={liveUrl ? String(liveUrl) : location}
+              width="100%"
+              height="600"
+              style={{border: 'none'}}
+              title="Preview of media file"
+            />
+          </div>
+        </div>
+        <div className={styles.image.content()}>
+          <div className={styles.image.content.readonly()}>
+            <Property label="Extension">{file.data.extension}</Property>
+            <Property label="File size">{prettyBytes(file.data.size)}</Property>
+          </div>
 
-      <Property label="URL">
-        <Typo.Monospace>
-          {MEDIA_LOCATION in file.data
-            ? (file.data[MEDIA_LOCATION] as string)
-            : file.data.location}
-        </Typo.Monospace>
-      </Property>
-    </Lift>
+          <Property label="URL">
+            <a
+              href={liveUrl ? String(liveUrl) : location}
+              target="_blank"
+              title={location}
+              className={styles.image.content.url()}
+            >
+              <Typo.Monospace>
+                {MEDIA_LOCATION in file.data
+                  ? (file.data[MEDIA_LOCATION] as string)
+                  : file.data.location}
+              </Typo.Monospace>
+            </a>
+          </Property>
+          <InputField field={type.title} />
+        </div>
+      </Lift>
+      <Lift className={styles.references()}>
+        <h2>2 references</h2>
+        <div className={styles.references.list()}>
+          <div className={styles.references.list.item('header')}>
+            <p>Status</p>
+            <p>Title</p>
+            <p>Field</p>
+          </div>
+          {referencesFiles.map((detail, index) => (
+            <div key={index} className={styles.references.list.item()}>
+              <p className={styles.references.list.item.status(detail.status)}>
+                {detail.status}
+              </p>
+              <p className={styles.references.list.item.link()}>
+                <HStack gap={8} align="center">
+                  {detail.title}
+                  <Icon icon={IcRoundOpenInNew} />
+                </HStack>
+              </p>
+              <p className={styles.references.list.item.link()}>
+                {detail.field}
+              </p>
+            </div>
+          ))}
+        </div>
+      </Lift>
+    </>
   )
 }
 

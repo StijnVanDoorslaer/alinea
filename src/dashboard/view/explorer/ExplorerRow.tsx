@@ -1,7 +1,7 @@
 import styler from '@alinea/styler'
 import type {QueryWithResult} from 'alinea/core/Graph'
-import type {Schema} from 'alinea/core/Schema'
 import type {SummaryProps} from 'alinea/core/media/Summary'
+import type {Schema} from 'alinea/core/Schema'
 import {type ComponentType, memo} from 'react'
 import {useQuery} from 'react-query'
 import {useGraph} from '../../hook/UseGraph.js'
@@ -56,7 +56,7 @@ export const ExplorerRow = memo(function ExplorerRow({
         }}
       >
         {entries?.map(entry => {
-          if (!entry) return null
+          if (!entry || entry.type === 'MediaLibrary') return null
           return (
             <ExplorerItem
               key={entry.id}

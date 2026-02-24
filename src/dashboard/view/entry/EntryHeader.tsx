@@ -7,6 +7,7 @@ import {IcOutlineArchive} from 'alinea/ui/icons/IcOutlineArchive'
 import {IcOutlineAvTimer} from 'alinea/ui/icons/IcOutlineAvTimer'
 import {IcOutlineKeyboardTab} from 'alinea/ui/icons/IcOutlineKeyboardTab'
 import {IcOutlineRemoveRedEye} from 'alinea/ui/icons/IcOutlineRemoveRedEye'
+import {IcRoundAccessTime} from 'alinea/ui/icons/IcRoundAccessTime'
 import {IcRoundCheck} from 'alinea/ui/icons/IcRoundCheck'
 import {IcRoundDelete} from 'alinea/ui/icons/IcRoundDelete'
 import {IcRoundEdit} from 'alinea/ui/icons/IcRoundEdit'
@@ -380,6 +381,20 @@ export function EntryHeader({editor, editable = true}: EntryHeaderProps) {
                       Publish
                     </Button>
                   )}
+                  {!untranslated &&
+                    !hasChanges &&
+                    canPublish &&
+                    selectedStatus === 'draft' && (
+                      <Button
+                        icon={IcRoundAccessTime}
+                        onClick={publishDraft}
+                        className={styles.root.main({
+                          unpublished: variant === 'unpublished'
+                        })}
+                      >
+                        Cancel scheduled publishing
+                      </Button>
+                    )}
                   {!untranslated &&
                     !hasChanges &&
                     canPublish &&

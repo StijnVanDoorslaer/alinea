@@ -1,10 +1,18 @@
-import {type MetadataField, metadata as createMetadata} from 'alinea/field/metadata'
-import {type PathField, path as createPath} from 'alinea/field/path'
+import {
+  metadata as createMetadata,
+  type MetadataField
+} from 'alinea/field/metadata'
+import {path as createPath, type PathField} from 'alinea/field/path'
 import {tab, tabs} from 'alinea/field/tabs'
 import {type TextField, text} from 'alinea/field/text'
 import {IcRoundDescription} from 'alinea/ui/icons/IcRoundDescription'
-import {IcRoundShare} from 'alinea/ui/icons/IcRoundShare'
-import {type FieldsDefinition, type Type, type TypeConfig, type} from './Type.js'
+import {IcRoundFindInPage} from 'alinea/ui/icons/IcRoundFindInPage'
+import {
+  type FieldsDefinition,
+  type Type,
+  type TypeConfig,
+  type
+} from './Type.js'
 
 export type Document = {
   title: TextField
@@ -30,8 +38,8 @@ export function document<Fields extends FieldsDefinition>(
       icon: IcRoundDescription,
       fields: {title, path, ...fields}
     }),
-    tab('Metadata', {
-      icon: IcRoundShare,
+    tab('SEO', {
+      icon: IcRoundFindInPage,
       fields: {metadata}
     })
   )

@@ -2,7 +2,18 @@
   "_id": "2dgfSWKFaEqxaimsO32A1sR9iMw",
   "_type": "Examples",
   "_index": "a0",
-  "_i18nId": "2dgfSWKFaEqxaimsO32A1sR9iMw",
-  "_root": "fields",
-  "title": "Examples"
+  "title": "Examples",
+  "metadata": {
+    "noindex": true,
+    "vanityUrl": "/campaign",
+    "metadata": {
+      "title": "",
+      "description": "",
+      "openGraph": {
+        "image": {},
+        "title": "",
+        "description": ""
+      }
+    }
+  }
 }

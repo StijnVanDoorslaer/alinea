@@ -1,6 +1,6 @@
 import styler from '@alinea/styler'
 import type {SummaryProps} from 'alinea/core/media/Summary'
-import {Chip, HStack, TextLabel, Typo, VStack, px} from 'alinea/ui'
+import {Chip, HStack, px, TextLabel, Typo, VStack} from 'alinea/ui'
 import {Ellipsis} from 'alinea/ui/Ellipsis'
 import {IcRoundInsertDriveFile} from 'alinea/ui/icons/IcRoundInsertDriveFile'
 import {IcRoundKeyboardArrowRight} from 'alinea/ui/icons/IcRoundKeyboardArrowRight'
@@ -74,7 +74,11 @@ export function FileSummaryThumb(file: SummaryProps) {
             className={styles.thumb.preview.image(/*{cover: imageCover}*/)}
           />
         ) : (
-          <div className={styles.thumb.preview.icon()}>
+          <div
+            className={styles.thumb.preview.icon(
+              file.extension.replace('.', '')
+            )}
+          >
             <IcRoundInsertDriveFile style={{fontSize: px(36)}} />
           </div>
         )}

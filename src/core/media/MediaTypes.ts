@@ -23,6 +23,7 @@ export const MediaFile = type('Media file', {
   hidden: true,
   fields: {
     title: text('Title'),
+    alt: text('Alternative text'),
     path: hidden<string>('Path'),
     location: hidden<string>('Location'),
     previewUrl: hidden<string>('Preview URL'),

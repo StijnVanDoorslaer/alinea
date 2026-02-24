@@ -11,13 +11,13 @@ import {useLocale} from '../hook/UseLocale.js'
 import {useNav} from '../hook/UseNav.js'
 import {useRoot} from '../hook/UseRoot.js'
 import {useWorkspace} from '../hook/UseWorkspace.js'
+import {Explorer, type ExporerItemSelect} from './explorer/Explorer.js'
 import {IconButton} from './IconButton.js'
 import css from './SearchBox.module.scss'
-import {Explorer, type ExporerItemSelect} from './explorer/Explorer.js'
 
 const styles = styler(css)
 
-export function SearchBox() {
+export function SearchBox({style}: {style?: React.CSSProperties}) {
   const nav = useNav()
   const navigate = useNavigate()
   const location = useLocation()
@@ -48,6 +48,7 @@ export function SearchBox() {
   return (
     <div
       className={styles.root()}
+      style={style}
       onFocus={() => {
         setIsOpen(true)
         //list.focusProps.onFocus()
