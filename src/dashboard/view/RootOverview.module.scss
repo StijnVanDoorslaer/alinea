@@ -33,3 +33,38 @@
     }
   }
 }
+
+.listItem {
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  text-decoration: 2px underline #eee;
+  text-underline-offset: 4px;
+
+  .listItem-image {
+    width: 64px;
+    height: 64px;
+
+    img {
+      border-radius: var(--alinea-border-radius);
+    }
+  }
+
+  .listItem-file {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    border-radius: var(--alinea-border-radius);
+
+    &.is-pdf {
+      color: #ef5350;
+    }
+
+    &.is-docx {
+      color: #4b66a3;
+    }
+  }
+}
