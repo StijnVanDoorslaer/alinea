@@ -1,0 +1,36 @@
+.root {
+  gap: 32px;
+  display: flex;
+  flex-direction: column;
+
+  .intro {
+    position: relative;
+
+    .introText {
+      max-width: 720px !important;
+      text-wrap: pretty;
+    }
+  }
+
+  .lift {
+    border-radius: var(--alinea-border-radius);
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid var(--alinea-outline);
+    }
+
+    tbody {
+      tr:nth-child(even) {
+        background: #fafafa;
+      }
+    }
+  }
+}

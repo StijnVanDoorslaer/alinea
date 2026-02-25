@@ -1,5 +1,6 @@
 import {Config} from 'alinea'
 import {createCMS} from 'alinea/next'
+import {IcRoundPieChart} from 'alinea/ui/icons/IcRoundPieChart'
 import {IcRoundTranslate} from 'alinea/ui/icons/IcRoundTranslate'
 import {IcRoundUploadFile} from 'alinea/ui/icons/IcRoundUploadFile'
 import * as schema from './schema'
@@ -43,6 +44,10 @@ export const cms = createCMS({
         custom: Config.root('Custom', {
           contains: [schema.CustomPage],
           view: './src/CustomRootView.tsx#CustomRootView'
+        }),
+        rot: Config.root('ROT analysis', {
+          icon: IcRoundPieChart,
+          view: './src/RotRoot.tsx#RotRoot'
         }),
         media: Config.media()
       }

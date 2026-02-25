@@ -157,51 +157,6 @@ export function RootOverview({root}: RootOverviewProps) {
               </VStack>
             </HStack>
           </Lift>
-          <Lift className={styles.root.lift()}>
-            <VStack gap={8}>
-              <Typo.H2
-                style={{
-                  paddingBottom: '8px',
-                  borderBottom: '1px solid var(--alinea-outline)'
-                }}
-              >
-                <TextLabel label="ROT Analyse" />
-              </Typo.H2>
-              <table className={styles.root.lift.table()}>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Page title</th>
-                    <th>Page url</th>
-                    <th>Status</th>
-                    <th>Last modified date</th>
-                    <th>Publication date</th>
-                    <th>Page views/year</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={{color: '#66bb6a'}}>•</td>
-                    <td>Home</td>
-                    <td>/en</td>
-                    <td>Pusblished</td>
-                    <td>31/01/2026</td>
-                    <td>01/01/2026</td>
-                    <td>7654</td>
-                  </tr>
-                  <tr>
-                    <td style={{color: '#ef5350'}}>•</td>
-                    <td>Test</td>
-                    <td>/test</td>
-                    <td>Pusblished</td>
-                    <td>31/01/2020</td>
-                    <td>01/01/2020</td>
-                    <td>0</td>
-                  </tr>
-                </tbody>
-              </table>
-            </VStack>
-          </Lift>
         </Main.Container>
       </Main>
     </>
