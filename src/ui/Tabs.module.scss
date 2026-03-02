@@ -1,6 +1,7 @@
 .list {
   display: flex;
   overflow: auto;
+  scrollbar-width: thin;
   max-width: 100%;
   padding: 8px !important;
   gap: 5px;
@@ -27,13 +28,20 @@
   color: var(--alinea-tabs-trigger-foreground);
   border-radius: var(--alinea-border-radius);
 
-  &:hover {
+  &[data-hover],
+  &[data-focus] {
     opacity: 1;
+    background: var(--alinea-highlight);
   }
 
   &.is-selected {
     opacity: 1;
     background: var(--alinea-selected);
     color: var(--alinea-selected-foreground);
+
+    &[data-focus] {
+      outline: 2px solid var(--alinea-selected);
+      outline-offset: 2px;
+    }
   }
 }
