@@ -179,7 +179,7 @@ export function createLocalServer(
     if (ifNoneMatch && ifNoneMatch === etag)
       return new Response(undefined, {status: 304})
     const extension = path.extname(fileName)
-    return new Response(file.contents, {
+    return new Response(file.contents as BodyInit, {
       headers: {
         'content-type': mimeTypes.get(extension) || 'application/octet-stream',
         etag

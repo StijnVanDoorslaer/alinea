@@ -272,7 +272,7 @@ function writeUint32BE(target: Uint8Array, offset: number, value: number) {
 }
 
 async function zlibCompress(data: Uint8Array): Promise<Uint8Array> {
-  const blob = new Blob([data])
+  const blob = new Blob([data as BlobPart])
   const compressed = new Response(
     blob.stream().pipeThrough(new CompressionStream('deflate'))
   )

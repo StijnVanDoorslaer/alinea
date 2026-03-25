@@ -11,7 +11,7 @@ const hopByHopHeaders = [
   'upgrade'
 ]
 
-export const proxy: typeof fetch = async (input, init) => {
+export const proxy = (async (input, init) => {
   const request = new Request(input, init)
   request.headers.delete('accept-encoding')
   const response = await fetch(request)
@@ -26,4 +26,4 @@ export const proxy: typeof fetch = async (input, init) => {
     statusText: response.statusText,
     headers: headers
   })
-}
+}) as typeof fetch

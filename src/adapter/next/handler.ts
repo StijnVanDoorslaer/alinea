@@ -6,11 +6,9 @@ import {
   createHandler as createCoreHandler,
   type HandlerHooks
 } from 'alinea/backend/Handler'
-import {proxy} from 'alinea/backend/router/Proxy'
 import {generatedSource} from 'alinea/backend/store/GeneratedSource'
 import {JWTPreviews} from 'alinea/backend/util/JWTPreviews'
 import {CloudRemote} from 'alinea/cloud/CloudRemote'
-import {Config} from 'alinea/core/Config'
 import type {RemoteConnection, RequestContext} from 'alinea/core/Connection'
 import {LocalDB} from 'alinea/core/db/LocalDB'
 import PLazy from 'p-lazy'
